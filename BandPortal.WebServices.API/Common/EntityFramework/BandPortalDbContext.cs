@@ -16,6 +16,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
 
 
 
+        public DbSet<AddressEntityModel> Addresses { get; set; }
         public DbSet<BandEntityModel> Bands { get; set; }
         public DbSet<BandMembershipEntityModel> BandMemberships { get; set; }
         public DbSet<ContactEntityModel> Contacts { get; set; }
@@ -49,7 +50,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
             // addresses
             modelBuilder.Entity<AddressEntityModel>(entity =>
             {
-                entity.ToTable("venues");
+                entity.ToTable("addresses");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id)                              .HasColumnName("id")                                        .HasColumnType("char(36)")                                                                                                          .IsRequired();
                 entity.Property(e => e.CreatedAt)                       .HasColumnName("created_at")                                .HasColumnType("datetime")                                                      .HasDefaultValueSql("UTC_TIMESTAMP()")              .IsRequired();
@@ -58,9 +59,9 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.LastUpdatedBy)                   .HasColumnName("last_updated_by")                           .HasColumnType("char(36)");
                 entity.Property(e => e.DeletedAt)                       .HasColumnName("deleted_at")                                .HasColumnType("datetime");
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
-                
+
                 entity.Property(e => e.Name)                            .HasColumnName("name")                                      .HasColumnType("text")                                                                                                              .IsRequired();
-                entity.Property(e => e.AddressLine1)                    .HasColumnName("address_line_1")                            .HasColumnType("char(36)");
+                entity.Property(e => e.AddressLine1)                    .HasColumnName("address_line_1")                            .HasColumnType("text");
                 entity.Property(e => e.AddressLine2)                    .HasColumnName("address_line_2")                            .HasColumnType("text");
                 entity.Property(e => e.City)                            .HasColumnName("city")                                      .HasColumnType("text");
                 entity.Property(e => e.County)                          .HasColumnName("county")                                    .HasColumnType("text");
