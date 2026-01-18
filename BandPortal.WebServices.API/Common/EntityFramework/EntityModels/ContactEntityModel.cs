@@ -15,9 +15,9 @@
 
 
         public required string DisplayName { get; set; }
-        public required string? EmailAddress { get; set; }
-        public required string? PhoneNumber { get; set; }
-        public required Guid? UserId { get; set; }
+        public string? EmailAddress { get; set; }
+        public string? PhoneNumber { get; set; }
+        public Guid? UserId { get; set; }
 
 
 

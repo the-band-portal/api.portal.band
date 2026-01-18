@@ -15,12 +15,12 @@
 
 
         public required string Title { get; set; }
-        public required Guid? ArtistContactId { get; set; }
-        public required long? DurationInSeconds { get; set; }
-        public required string? TimeSignature { get; set; }
-        public required string? KeySignature { get; set; }
-        public required string? TempoInBpm { get; set; }
-        public required string? Genre { get; set; }
+        public Guid? ArtistContactId { get; set; }
+        public long? DurationInSeconds { get; set; }
+        public string? TimeSignature { get; set; }
+        public string? KeySignature { get; set; }
+        public string? TempoInBpm { get; set; }
+        public string? Genre { get; set; }
 
 
 

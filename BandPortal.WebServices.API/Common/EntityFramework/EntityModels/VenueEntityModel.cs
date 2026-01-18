@@ -15,12 +15,12 @@
 
 
         public required string Name { get; set; }
-        public required Guid? AddressId { get; set; }
-        public required string? Capacity { get; set; }
-        public required string? StageDimensions { get; set; }
-        public required string? ParkingInstructions { get; set; }
-        public required string? LoadInInstructions { get; set; }
-        public required Guid? PrimaryContactId { get; set; }
+        public Guid? AddressId { get; set; }
+        public string? Capacity { get; set; }
+        public string? StageDimensions { get; set; }
+        public string? ParkingInstructions { get; set; }
+        public string? LoadInInstructions { get; set; }
+        public Guid? PrimaryContactId { get; set; }
 
 
 

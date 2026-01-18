@@ -19,15 +19,15 @@ namespace BandPortal.WebServices.API.Common.EntityFramework.EntityModels
         public required string Name { get; set; }
         public required string? Description { get; set; }
         public required Guid ClientContactId { get; set; }
-        public required Guid? VenueId { get; set; }
-        public required DateOnly? PerformanceStartDate { get; set; }
-        public required TimeOnly? PerformanceStartTime { get; set; }
-        public required DateOnly? PerformanceEndDate { get; set; }
-        public required TimeOnly? PerformanceEndTime { get; set; }
-        public required DateTime? LoadInDateTime { get; set; }
-        public required DateTime? LoadOutDateTime { get; set; }
-        public required DateTime? SoundCheckDateTime { get; set; }
-        public required GigStatusEnum? Status { get; set; }
+        public Guid? VenueId { get; set; }
+        public DateOnly? PerformanceStartDate { get; set; }
+        public TimeOnly? PerformanceStartTime { get; set; }
+        public DateOnly? PerformanceEndDate { get; set; }
+        public TimeOnly? PerformanceEndTime { get; set; }
+        public DateTime? LoadInDateTime { get; set; }
+        public DateTime? LoadOutDateTime { get; set; }
+        public DateTime? SoundCheckDateTime { get; set; }
+        public GigStatusEnum? Status { get; set; }
 
 
 

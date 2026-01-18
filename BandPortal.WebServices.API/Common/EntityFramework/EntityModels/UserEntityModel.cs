@@ -17,7 +17,7 @@
         public required string EmailAddress { get; set; }
         public required string DisplayName { get; set; }
         public required string PasswordHash { get; set; }
-        public required DateTime? LastLogin { get; set; }
+        public DateTime? LastLogin { get; set; }
         public required bool HasEmailAddressBeenVerified { get; set; }
         public required bool AllowLogin { get; set; }
 
