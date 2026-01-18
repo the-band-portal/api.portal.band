@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BandPortal.WebServices.API.Common.Services.Implementations
 {
-    public class JWTService
+    public class JWTService : IJWTService
     {
         private readonly ConfigStructure _configuration;
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BandPortal.WebServices.API.Common.Services.Implementations
 {
-    public class PasswordService
+    public class PasswordService : IPasswordService
     {
         private const int Argon2MemoryCost = 65536;
         private const int Argon2TimeCost = 3;
