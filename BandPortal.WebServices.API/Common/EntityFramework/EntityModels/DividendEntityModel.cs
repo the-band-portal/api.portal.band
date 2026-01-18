@@ -15,7 +15,7 @@
 
 
         public required Guid InvoiceId { get; set; }
-        public required Guid UserId { get; set; }
+        public required Guid? UserId { get; set; }
         public required decimal Amount { get; set; }
 
 

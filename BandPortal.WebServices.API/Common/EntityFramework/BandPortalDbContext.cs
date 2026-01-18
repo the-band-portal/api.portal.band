@@ -188,7 +188,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
                 entity.Property(e => e.InvoiceId)                       .HasColumnName("invoice_id")                                .HasColumnType("char(36)")                                                                                                          .IsRequired();
-                entity.Property(e => e.UserId)                          .HasColumnName("user_id")                                   .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.UserId)                          .HasColumnName("user_id")                                   .HasColumnType("char(36)");
                 entity.Property(e => e.Amount)                          .HasColumnName("amount")                                    .HasColumnType("text")                                                                                                              .IsRequired();
 
 
@@ -197,7 +197,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.HasOne(e => e.LastUpdatedByUser)                 .WithMany()                                                 .HasForeignKey(e => e.LastUpdatedBy)    .OnDelete(DeleteBehavior.SetNull);
                 entity.HasOne(e => e.DeletedByUser)                     .WithMany()                                                 .HasForeignKey(e => e.DeletedBy)        .OnDelete(DeleteBehavior.SetNull);
                 
-                entity.HasOne(e => e.Invoice)                           .WithMany()                                                 .HasForeignKey(e => e.InvoiceId)        .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.Invoice)                           .WithMany()                                                 .HasForeignKey(e => e.InvoiceId)        .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(e => e.User)                              .WithMany()                                                 .HasForeignKey(e => e.UserId)           .OnDelete(DeleteBehavior.SetNull);
             });
 
@@ -219,7 +219,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
                 entity.Property(e => e.GigId)                           .HasColumnName("gig_id")                                    .HasColumnType("char(36)")                                                                                                          .IsRequired();
-                entity.Property(e => e.BandMembershipId)                .HasColumnName("band_membership_id")                        .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.BandMembershipId)                .HasColumnName("band_membership_id")                        .HasColumnType("char(36)");
                 entity.Property(e => e.IsAvailable)                     .HasColumnName("is_available")                              .HasColumnType("tinyint(1)")                                                                                                        .IsRequired();
                 entity.Property(e => e.PrimaryInstrument)               .HasColumnName("primary_instrument")                        .HasColumnType("text");
 
@@ -229,7 +229,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.HasOne(e => e.LastUpdatedByUser)                 .WithMany()                                                 .HasForeignKey(e => e.LastUpdatedBy)    .OnDelete(DeleteBehavior.SetNull);
                 entity.HasOne(e => e.DeletedByUser)                     .WithMany()                                                 .HasForeignKey(e => e.DeletedBy)        .OnDelete(DeleteBehavior.SetNull);
                 
-                entity.HasOne(e => e.Gig)                               .WithMany()                                                 .HasForeignKey(e => e.GigId)            .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.Gig)                               .WithMany()                                                 .HasForeignKey(e => e.GigId)            .OnDelete(DeleteBehavior.Cascade);
                 entity.HasOne(e => e.BandMembership)                    .WithMany()                                                 .HasForeignKey(e => e.BandMembershipId) .OnDelete(DeleteBehavior.SetNull);
             });
 
@@ -290,7 +290,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedAt)                       .HasColumnName("deleted_at")                                .HasColumnType("datetime");
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
-                entity.Property(e => e.GigId)                           .HasColumnName("gig_id")                                    .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.GigId)                           .HasColumnName("gig_id")                                    .HasColumnType("char(36)");
 
 
 
@@ -367,8 +367,8 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedAt)                       .HasColumnName("deleted_at")                                .HasColumnType("datetime");
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
-                entity.Property(e => e.GigId)                           .HasColumnName("gig_id")                                    .HasColumnType("char(36)")                                                                                                          .IsRequired();
-                entity.Property(e => e.ClientContactId)                 .HasColumnName("client_contact_id")                         .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.GigId)                           .HasColumnName("gig_id")                                    .HasColumnType("char(36)");
+                entity.Property(e => e.ClientContactId)                 .HasColumnName("client_contact_id")                         .HasColumnType("char(36)");
                 entity.Property(e => e.Amount)                          .HasColumnName("amount")                                    .HasColumnType("decimal(10,2)")                                                                                                     .IsRequired();
                 entity.Property(e => e.Currency)                        .HasColumnName("currency")                                  .HasColumnType("text")                                                                                                              .IsRequired();
                 entity.Property(e => e.Status)                          .HasColumnName("status")                                    .HasColumnType("text")                                                                                                              .IsRequired();
@@ -421,7 +421,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedAt)                       .HasColumnName("deleted_at")                                .HasColumnType("datetime");
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
-                entity.Property(e => e.Description)                     .HasColumnName("description")                               .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.Description)                     .HasColumnName("description")                               .HasColumnType("text")                                                                                                          .IsRequired();
 
 
 
@@ -448,7 +448,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
                 entity.Property(e => e.SetListId)                       .HasColumnName("set_list_id")                               .HasColumnType("char(36)")                                                                                                          .IsRequired();
-                entity.Property(e => e.TrackId)                         .HasColumnName("track_id")                                  .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.TrackId)                         .HasColumnName("track_id")                                  .HasColumnType("char(36)");
 
 
 
@@ -477,7 +477,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedAt)                       .HasColumnName("deleted_at")                                .HasColumnType("datetime");
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 
-                entity.Property(e => e.Title)                           .HasColumnName("set_list_id")                               .HasColumnType("char(36)")                                                                                                          .IsRequired();
+                entity.Property(e => e.Title)                           .HasColumnName("title")                                     .HasColumnType("text")                                                                                                              .IsRequired();
                 entity.Property(e => e.ArtistContactId)                 .HasColumnName("artist_contact_id")                         .HasColumnType("char(36)");
                 entity.Property(e => e.DurationInSeconds)               .HasColumnName("duration_in_seconds")                       .HasColumnType("text");
                 entity.Property(e => e.TimeSignature)                   .HasColumnName("time_signature")                            .HasColumnType("text");
@@ -491,7 +491,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.HasOne(e => e.LastUpdatedByUser)                 .WithMany()                                                 .HasForeignKey(e => e.LastUpdatedBy)    .OnDelete(DeleteBehavior.SetNull);
                 entity.HasOne(e => e.DeletedByUser)                     .WithMany()                                                 .HasForeignKey(e => e.DeletedBy)        .OnDelete(DeleteBehavior.SetNull);
                 
-                entity.HasOne(e => e.Artist)                            .WithMany()                                                 .HasForeignKey(e => e.ArtistContactId)  .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.ArtistContact)                     .WithMany()                                                 .HasForeignKey(e => e.ArtistContactId)  .OnDelete(DeleteBehavior.SetNull);
             });
 
 
@@ -587,7 +587,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.HasOne(e => e.LastUpdatedByUser)                 .WithMany()                                                 .HasForeignKey(e => e.LastUpdatedBy)    .OnDelete(DeleteBehavior.SetNull);
                 entity.HasOne(e => e.DeletedByUser)                     .WithMany()                                                 .HasForeignKey(e => e.DeletedBy)        .OnDelete(DeleteBehavior.SetNull);
                 
-                entity.HasOne(e => e.Venue)                             .WithMany()                                                 .HasForeignKey(e => e.VenueId)          .OnDelete(DeleteBehavior.SetNull);
+                entity.HasOne(e => e.Venue)                             .WithMany()                                                 .HasForeignKey(e => e.VenueId)          .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

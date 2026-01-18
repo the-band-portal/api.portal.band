@@ -36,6 +36,6 @@
 
 
 
-        public ContactEntityModel? Artist { get; set; }
+        public ContactEntityModel? ArtistContact { get; set; }
     }
 }

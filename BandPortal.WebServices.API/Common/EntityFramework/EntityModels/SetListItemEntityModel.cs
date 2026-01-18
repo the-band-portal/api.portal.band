@@ -15,7 +15,7 @@
 
 
         public required Guid SetListId { get; set; }
-        public required Guid TrackId { get; set; }
+        public required Guid? TrackId { get; set; }
 
 
 

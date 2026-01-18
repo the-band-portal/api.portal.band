@@ -16,7 +16,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework.EntityModels
 
 
 
-        public required Guid GigId { get; set; }
+        public required Guid? GigId { get; set; }
 
 
 
