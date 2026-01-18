@@ -18,7 +18,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework.EntityModels
 
         public required string Name { get; set; }
         public required string? Description { get; set; }
-        public required Guid ClientContactId { get; set; }
+        public required Guid? ClientContactId { get; set; }
         public Guid? VenueId { get; set; }
         public DateOnly? PerformanceStartDate { get; set; }
         public TimeOnly? PerformanceStartTime { get; set; }
