@@ -15,7 +15,6 @@ namespace BandPortal.WebServices.API.Models.UserRegistration
         public required string EmailAddress { get; init; }
 
         [Required]
-        [EmailAddress]
         [JsonPropertyName("displayName")]
         public required string DisplayName { get; init; }
 
