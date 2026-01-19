@@ -132,7 +132,7 @@ namespace BandPortal.WebServices.API.Controllers
                 // get the user from the database
                 var user = await _db.Users
                     .FirstOrDefaultAsync(u => u.EmailAddress == request.EmailAddress);
-                if (user != null)
+                if (user == null)
                     return StatusCode(StatusCodes.Status409Conflict, new GenericFailResponseModel
                     {
                         Detail = "Incorrect credentials"
@@ -177,7 +177,7 @@ namespace BandPortal.WebServices.API.Controllers
                 await _db.SaveChangesAsync();
 
                 // return
-                return StatusCode(StatusCodes.Status201Created, new UserLoginResponseModel
+                return StatusCode(StatusCodes.Status200OK, new UserLoginResponseModel
                 {
                     AccessToken = accessToken,
                     RefreshToken = refreshToken,
@@ -239,7 +239,7 @@ namespace BandPortal.WebServices.API.Controllers
                 await _db.SaveChangesAsync();
 
                 // return
-                return StatusCode(StatusCodes.Status201Created, new UserLoginResponseModel
+                return StatusCode(StatusCodes.Status200OK, new UserLoginResponseModel
                 {
                     AccessToken = accessToken,
                     RefreshToken = newRefreshToken!,
