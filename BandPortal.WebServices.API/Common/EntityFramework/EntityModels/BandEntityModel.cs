@@ -16,7 +16,6 @@
 
         public required string Name { get; set; }
         public required string Biography { get; set; }
-        public required string Website { get; set; }
 
 
 
