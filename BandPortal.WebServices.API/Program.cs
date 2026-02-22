@@ -114,6 +114,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IJWTService, JWTService>();
 
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IBandMembershipObjectService, BandMembershipObjectService>();
+builder.Services.AddScoped<IBandObjectService, BandObjectService>();
+builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<IUserObjectService, UserObjectService>();
+builder.Services.AddScoped<IVenueService, VenueService>();
+
 builder.Services.AddHttpClient<ICaptchaService, CaptchaService>();
 
 
