@@ -3,19 +3,20 @@
     public class VenueEntityModel : BaseEntityModel
     {
         public required string Name { get; set; }
-        public Guid? AddressId { get; set; }
-        public string? CapacityDetails { get; set; }
-        public string? StageDetails { get; set; }
-        public string? ParkingInstructions { get; set; }
-        public string? LoadInInstructions { get; set; }
-        public string? LoadOutInstructions { get; set; }
+        public string? AddressLine1 { get; set; }
+        public string? AddressLine2 { get; set; }
+        public string? City { get; set; }
+        public string? County { get; set; }
+        public string? Country { get; set; }
+        public string? Postcode { get; set; }
+        public float? Latitude { get; set; }
+        public float? Longitude { get; set; }
         public Guid? PrimaryContactId { get; set; }
 
 
 
 
 
-        public AddressEntityModel? Address { get; set; }
         public ContactEntityModel? PrimaryContact { get; set; }
     }
 }

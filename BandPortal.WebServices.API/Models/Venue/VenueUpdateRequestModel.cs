@@ -1,49 +1,51 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BandPortal.WebServices.API.Models.Venue
 {
     public class VenueUpdateRequestModel
     {
         [JsonPropertyName("name")]
-        public string? Name { get; set; }
+        public string? Name { get; init; }
 
+        [JsonPropertyName("addressLine1")]
+        public string? AddressLine1 { get; init; }
 
-        [JsonPropertyName("addressId")]
-        public Guid? AddressId { get; set; }
+        [JsonPropertyName("addressLine2")]
+        public string? AddressLine2 { get; init; }
 
+        [JsonPropertyName("city")]
+        public string? City { get; init; }
 
-        [JsonPropertyName("capacityDetails")]
-        public string? CapacityDetails { get; set; }
+        [JsonPropertyName("county")]
+        public string? County { get; init; }
 
+        [JsonPropertyName("country")]
+        public string? Country { get; init; }
 
-        [JsonPropertyName("stageDetails")]
-        public string? StageDetails { get; set; }
+        [JsonPropertyName("postcode")]
+        public string? Postcode { get; init; }
 
+        [JsonPropertyName("latitude")]
+        public float? Latitude { get; init; }
 
-        [JsonPropertyName("parkingInstructions")]
-        public string? ParkingInstructions { get; set; }
-
-
-        [JsonPropertyName("loadInInstructions")]
-        public string? LoadInInstructions { get; set; }
-
-
-        [JsonPropertyName("loadOutInstructions")]
-        public string? LoadOutInstructions { get; set; }
-
+        [JsonPropertyName("longitude")]
+        public float? Longitude { get; init; }
 
         [JsonPropertyName("primaryContactId")]
-        public Guid? PrimaryContactId { get; set; }
+        public Guid? PrimaryContactId { get; init; }
 
         public bool HasAnyUpdates()
         {
             return Name != null
-                || AddressId.HasValue
-                || CapacityDetails != null
-                || StageDetails != null
-                || ParkingInstructions != null
-                || LoadInInstructions != null
-                || LoadOutInstructions != null
+                || AddressLine1 != null
+                || AddressLine2 != null
+                || City != null
+                || County != null
+                || Country != null
+                || Postcode != null
+                || Longitude != null
+                || Latitude != null
                 || PrimaryContactId.HasValue;
         }
     }

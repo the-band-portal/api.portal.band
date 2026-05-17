@@ -16,7 +16,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
 
 
 
-        public DbSet<AddressEntityModel> Addresses { get; set; }
+        public DbSet<VenueEntityModel> Addresses { get; set; }
         public DbSet<BandEntityModel> Bands { get; set; }
         public DbSet<BandMembershipEntityModel> BandMemberships { get; set; }
         public DbSet<ContactEntityModel> Contacts { get; set; }
@@ -33,8 +33,8 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
         public DbSet<SetListItemEntityModel> SetListItems { get; set; }
         public DbSet<TrackEntityModel> Tracks { get; set; }
         public DbSet<UserEntityModel> Users { get; set; }
-        public DbSet<VenueEntityModel> Venues { get; set; }
-        public DbSet<VenueEquipmentEntityModel> VenueEquipment { get; set; }
+        public DbSet<StageEntityModel> Venues { get; set; }
+        public DbSet<StageEquipmentEntityModel> VenueEquipment { get; set; }
 
 
 
@@ -49,7 +49,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
 
 
             // addresses
-            modelBuilder.Entity<AddressEntityModel>(entity =>
+            modelBuilder.Entity<VenueEntityModel>(entity =>
             {
                 entity.ToTable("addresses");
                 entity.HasKey(e => e.Id);
@@ -583,7 +583,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
 
 
             // venues
-            modelBuilder.Entity<VenueEntityModel>(entity =>
+            modelBuilder.Entity<StageEntityModel>(entity =>
             {
                 entity.ToTable("venues");
                 entity.HasKey(e => e.Id);
@@ -621,7 +621,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
 
 
             // venue_equipment
-            modelBuilder.Entity<VenueEquipmentEntityModel>(entity =>
+            modelBuilder.Entity<StageEquipmentEntityModel>(entity =>
             {
                 entity.ToTable("venue_equipment");
                 entity.HasKey(e => e.Id);

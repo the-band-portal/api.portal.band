@@ -22,12 +22,12 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Venues
+                return await _db.Addresses
                     .FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get venue {VenueId} for band {BandId}", id, bandId);
+                _logger.LogError(ex, "Failed to get address {AddressId} for band {BandId}", id, bandId);
                 return null;
             }
         }
@@ -36,13 +36,13 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Venues
+                return await _db.Addresses
                     .Where(v => v.BandId == bandId)
                     .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get all venues for band {BandId}", bandId);
+                _logger.LogError(ex, "Failed to get all addresss for band {BandId}", bandId);
                 return new List<VenueEntityModel>();
             }
         }
@@ -51,82 +51,52 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                await _db.Venues.AddAsync(entity);
+                await _db.Addresses.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 return await GetByIdAsync(entity.Id, entity.BandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to create venue");
+                _logger.LogError(ex, "Failed to create address");
                 return null;
             }
         }
 
-        public async Task<VenueEntityModel?> UpdateAsync(Guid venueId, Guid bandId, VenueUpdateRequestModel updateData)
+        public async Task<VenueEntityModel?> UpdateAsync(Guid addressId, Guid bandId, VenueUpdateRequestModel updateData)
         {
             try
             {
-                var venue = await _db.Venues.FirstOrDefaultAsync(v => v.Id == venueId && v.BandId == bandId);
-                if (venue == null)
+                var address = await _db.Addresses.FirstOrDefaultAsync(v => v.Id == addressId && v.BandId == bandId);
+                if (address == null)
                 {
-                    _logger.LogWarning("Venue {VenueId} not found for band {BandId}", venueId, bandId);
+                    _logger.LogWarning("Address {AddressId} not found for band {BandId}", addressId, bandId);
                     return null;
                 }
 
                 bool hasUpdates = false;
 
-                if (updateData.Name != null)
-                {
-                    venue.Name = updateData.Name;
-                    hasUpdates = true;
-                }
-                if (updateData.AddressId.HasValue)
-                {
-                    venue.AddressId = updateData.AddressId;
-                    hasUpdates = true;
-                }
-                if (updateData.CapacityDetails != null)
-                {
-                    venue.CapacityDetails = updateData.CapacityDetails;
-                    hasUpdates = true;
-                }
-                if (updateData.StageDetails != null)
-                {
-                    venue.StageDetails = updateData.StageDetails;
-                    hasUpdates = true;
-                }
-                if (updateData.ParkingInstructions != null)
-                {
-                    venue.ParkingInstructions = updateData.ParkingInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.LoadInInstructions != null)
-                {
-                    venue.LoadInInstructions = updateData.LoadInInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.LoadOutInstructions != null)
-                {
-                    venue.LoadOutInstructions = updateData.LoadOutInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.PrimaryContactId.HasValue)
-                {
-                    venue.PrimaryContactId = updateData.PrimaryContactId;
-                    hasUpdates = true;
-                }
+                if (updateData.Name != null)                {   address.Name = updateData.Name;                             hasUpdates = true; }
+                if (updateData.AddressLine1 != null)        {   address.AddressLine1 = updateData.AddressLine1;             hasUpdates = true; }
+                if (updateData.AddressLine2 != null)        {   address.AddressLine1 = updateData.AddressLine1;             hasUpdates = true; }
+                if (updateData.City != null)                {   address.City = updateData.City;                             hasUpdates = true; }
+                if (updateData.County != null)              {   address.County = updateData.County;                         hasUpdates = true; }
+                if (updateData.Country != null)             {   address.Country = updateData.Country;                       hasUpdates = true; }
+                if (updateData.Postcode != null)            {   address.Postcode = updateData.Postcode;                     hasUpdates = true; }
+                if (updateData.Latitude != null)            {   address.Latitude = updateData.Latitude;                     hasUpdates = true; }
+                if (updateData.Longitude != null)           {   address.Longitude = updateData.Longitude;                   hasUpdates = true; }
+                if (updateData.PrimaryContactId.HasValue)   {   address.PrimaryContactId = updateData.PrimaryContactId;     hasUpdates = true; }
 
                 if (!hasUpdates)
                 {
-                    return venue;
+                    return address;
                 }
 
                 await _db.SaveChangesAsync();
-                return await GetByIdAsync(venueId, bandId);
+                return await GetByIdAsync(addressId, bandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update venue {VenueId}", venueId);
+                _logger.LogError(ex, "Failed to update address {AddressId}", addressId);
                 return null;
             }
         }
@@ -135,20 +105,20 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                var venue = await _db.Venues.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
-                if (venue == null)
+                var address = await _db.Addresses.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
+                if (address == null)
                 {
                     return false;
                 }
 
-                venue.DeletedBy = deletedBy;
-                venue.DeletedAt = DateTime.UtcNow;
+                address.DeletedBy = deletedBy;
+                address.DeletedAt = DateTime.UtcNow;
                 await _db.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete venue {VenueId}", id);
+                _logger.LogError(ex, "Failed to delete address {AddressId}", id);
                 return false;
             }
         }

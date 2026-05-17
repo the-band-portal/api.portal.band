@@ -1,40 +1,43 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace BandPortal.WebServices.API.Models.Venue
 {
     public class VenueCreationRequestModel
     {
-        [Required]
+
         [JsonPropertyName("name")]
-        public required string Name { get; set; }
+        public string? Name { get; set; }
 
 
-        [JsonPropertyName("addressId")]
-        public Guid? AddressId { get; set; }
+        [JsonPropertyName("addressLine1")]
+        public string? AddressLine1 { get; set; }
 
 
-        [JsonPropertyName("capacityDetails")]
-        public string CapacityDetails { get; set; } = string.Empty;
+        [JsonPropertyName("addressLine2")]
+        public string? AddressLine2 { get; set; }
 
 
-        [JsonPropertyName("stageDetails")]
-        public string StageDetails { get; set; } = string.Empty;
+        [JsonPropertyName("city")]
+        public string? City { get; set; }
 
 
-        [JsonPropertyName("parkingInstructions")]
-        public string ParkingInstructions { get; set; } = string.Empty;
+        [JsonPropertyName("county")]
+        public string? County { get; set; }
 
 
-        [JsonPropertyName("loadInInstructions")]
-        public string LoadInInstructions { get; set; } = string.Empty;
+        [JsonPropertyName("country")]
+        public string? Country { get; set; }
 
 
-        [JsonPropertyName("loadOutInstructions")]
-        public string LoadOutInstructions { get; set; } = string.Empty;
+        [JsonPropertyName("postcode")]
+        public string? Postcode { get; set; }
 
 
-        [JsonPropertyName("primaryContactId")]
-        public Guid? PrimaryContactId { get; set; }
+        [JsonPropertyName("latitude")]
+        public float? Latitude { get; set; }
+
+
+        [JsonPropertyName("longitude")]
+        public float? Longitude { get; set; }
     }
 }

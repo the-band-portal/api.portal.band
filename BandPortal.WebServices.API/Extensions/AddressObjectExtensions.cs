@@ -1,14 +1,13 @@
 ﻿using BandPortal.WebServices.API.Common.EntityFramework.EntityModels;
-using BandPortal.WebServices.API.Models.Address;
 using BandPortal.WebServices.API.Models.Venue;
 
 namespace BandPortal.WebServices.API.Extensions
 {
     public static class AddressObjectExtensions
     {
-        public static AddressResponseModel ToResponseModel(this AddressEntityModel entity)
+        public static VenueResponseModel ToResponseModel(this VenueEntityModel entity)
         {
-            return new AddressResponseModel
+            return new VenueResponseModel
             {
                 Id = entity.Id,
                 CreatedBy = entity.CreatedBy,

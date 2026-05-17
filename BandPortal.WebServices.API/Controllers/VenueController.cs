@@ -11,25 +11,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace BandPortal.WebServices.API.Controllers
 {
     [ApiController]
-    [Route("/api/v2/bands/{bandId}/venues")]
+    [Route("/api/v2/bands/{bandId:guid}/venues")]
     [Tags("Venues")]
     [Authorize]
     public class VenueController : LoggedInControllerBase
     {
         private readonly ILogger<VenueController> _logger;
-        private readonly IVenueService _venueService;
+        private readonly IVenueService _addressService;
         private readonly IBandObjectService _bandObjectService;
 
         public VenueController(
             ILogger<VenueController> logger,
-            IVenueService venueService,
+            IVenueService addressService,
             IBandObjectService bandObjectService,
             BandPortalDbContext db
         )
             : base(db, logger)
         {
             _logger = logger;
-            _venueService = venueService;
+            _addressService = addressService;
             _bandObjectService = bandObjectService;
         }
 
@@ -38,7 +38,7 @@ namespace BandPortal.WebServices.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<List<VenueResponseModel>>> GetAllVenues(Guid bandId)
+        public async Task<ActionResult<List<VenueResponseModel>>> GetAllAddresses(Guid bandId)
         {
             try
             {
@@ -54,14 +54,14 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venues = await _venueService.GetAllAsync(bandId);
-                var response = venues.Select(v => v.ToResponseModel()).ToList();
+                var Addresses = await _addressService.GetAllAsync(bandId);
+                var response = Addresses.Select(v => v.ToResponseModel()).ToList();
 
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get all venues for band {BandId}", bandId);
+                _logger.LogError(ex, "Failed to get all Addresses for band {BandId}", bandId);
                 return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
                 {
                     Detail = $"Database error: {ex.Message}"
@@ -69,13 +69,13 @@ namespace BandPortal.WebServices.API.Controllers
             }
         }
 
-        [HttpGet("{venueId}")]
+        [HttpGet("{addressId}")]
         [ProducesResponseType(typeof(VenueResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<VenueResponseModel>> GetVenue(Guid bandId, Guid venueId)
+        public async Task<ActionResult<VenueResponseModel>> GetAddress(Guid bandId, Guid addressId)
         {
             try
             {
@@ -91,20 +91,20 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venue = await _venueService.GetByIdAsync(venueId, bandId);
-                if (venue == null)
+                var address = await _addressService.GetByIdAsync(addressId, bandId);
+                if (address == null)
                 {
                     return NotFound(new GenericFailResponseModel
                     {
-                        Detail = "Venue not found"
+                        Detail = "Address not found"
                     });
                 }
 
-                return Ok(venue.ToResponseModel());
+                return Ok(address.ToResponseModel());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get venue {VenueId}", venueId);
+                _logger.LogError(ex, "Failed to get address {AddressId}", addressId);
                 return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
                 {
                     Detail = $"Database error: {ex.Message}"
@@ -117,9 +117,9 @@ namespace BandPortal.WebServices.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<VenueResponseModel>> CreateVenue(
+        public async Task<ActionResult<VenueResponseModel>> CreateAddress(
             Guid bandId,
-            [FromBody] VenueCreationRequestModel newVenueData)
+            [FromBody] VenueCreationRequestModel newAddressData)
         {
             try
             {
@@ -135,32 +135,38 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venue = new VenueEntityModel
+                var address = new VenueEntityModel
                 {
                     Id = Guid.NewGuid(),
+                    CreatedAt = DateTime.UtcNow,
                     BandId = bandId,
                     CreatedBy = user.Id,
-                    CreatedAt = DateTime.UtcNow,
                     LastUpdatedBy = user.Id,
-                    Name = newVenueData.Name,
-                    AddressId = newVenueData.AddressId,
-                    PrimaryContactId = newVenueData.PrimaryContactId
+                    Name = newAddressData.Name,
+                    AddressLine1 = newAddressData.AddressLine1,
+                    AddressLine2 = newAddressData.AddressLine2,
+                    City = newAddressData.City,
+                    County = newAddressData.County,
+                    Country = newAddressData.Country,
+                    Postcode = newAddressData.Postcode,
+                    Latitude = newAddressData.Latitude,
+                    Longitude = newAddressData.Longitude,
                 };
 
-                var createdVenue = await _venueService.CreateAsync(venue);
-                if (createdVenue == null)
+                var createdAddress = await _addressService.CreateAsync(address);
+                if (createdAddress == null)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
                     {
-                        Detail = "Failed to create venue"
+                        Detail = "Failed to create address"
                     });
                 }
 
-                return StatusCode(StatusCodes.Status201Created, createdVenue.ToResponseModel());
+                return StatusCode(StatusCodes.Status201Created, createdAddress.ToResponseModel());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to create venue");
+                _logger.LogError(ex, "Failed to create address");
                 return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
                 {
                     Detail = $"Database error: {ex.Message}"
@@ -168,16 +174,16 @@ namespace BandPortal.WebServices.API.Controllers
             }
         }
 
-        [HttpPatch("{venueId}")]
+        [HttpPatch("{addressId}")]
         [ProducesResponseType(typeof(VenueResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<VenueResponseModel>> UpdateVenue(
+        public async Task<ActionResult<VenueResponseModel>> UpdateAddress(
             Guid bandId,
-            Guid venueId,
+            Guid addressId,
             [FromBody] VenueUpdateRequestModel updateData)
         {
             try
@@ -202,20 +208,63 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venue = await _venueService.UpdateAsync(venueId, bandId, updateData);
-                if (venue == null)
+                var address = await _addressService.UpdateAsync(addressId, bandId, updateData);
+                if (address == null)
                 {
                     return NotFound(new GenericFailResponseModel
                     {
-                        Detail = "Venue not found"
+                        Detail = "Address not found"
                     });
                 }
 
-                return Ok(venue.ToResponseModel());
+                return Ok(address.ToResponseModel());
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update venue {VenueId}", venueId);
+                _logger.LogError(ex, "Failed to update address {AddressId}", addressId);
+                return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
+                {
+                    Detail = $"Database error: {ex.Message}"
+                });
+            }
+        }
+
+        [HttpDelete("{addressId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GenericFailResponseModel), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> DeleteAddress(Guid bandId, Guid addressId)
+        {
+            try
+            {
+                var (user, error) = await GetCurrentUserAsync();
+                if (error != null) return error;
+
+                var hasAccess = await _bandObjectService.UserHasBandAccessAsync(user!.Id, bandId);
+                if (!hasAccess)
+                {
+                    return StatusCode(StatusCodes.Status403Forbidden, new GenericFailResponseModel
+                    {
+                        Detail = "You do not have access to this band"
+                    });
+                }
+
+                var deleted = await _addressService.SoftDeleteAsync(addressId, bandId, user.Id);
+                if (!deleted)
+                {
+                    return NotFound(new GenericFailResponseModel
+                    {
+                        Detail = "Address not found or already deleted"
+                    });
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to delete address {AddressId}", addressId);
                 return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
                 {
                     Detail = $"Database error: {ex.Message}"

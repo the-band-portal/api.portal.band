@@ -23,6 +23,6 @@ namespace BandPortal.WebServices.API.Common.EntityFramework.EntityModels
 
 
         public ContactEntityModel? Client { get; set; }
-        public VenueEntityModel? Venue { get; set; }
+        public StageEntityModel? Venue { get; set; }
     }
 }
