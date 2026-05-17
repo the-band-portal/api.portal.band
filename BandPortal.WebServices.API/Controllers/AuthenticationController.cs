@@ -81,13 +81,13 @@ namespace BandPortal.WebServices.API.Controllers
                 var user = new UserEntityModel
                 {
                     Id = userId,
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = userId,
                     EmailAddress = request.EmailAddress,
                     PasswordHash = passwordHash,
                     DisplayName = request.DisplayName,
                     AllowLogin = true,
                     HasEmailAddressBeenVerified = false,
-                    CreatedAt = DateTime.UtcNow,
-                    CreatedBy = userId
                 };
                 _db.Users.Add(user);
                 await _db.SaveChangesAsync();
