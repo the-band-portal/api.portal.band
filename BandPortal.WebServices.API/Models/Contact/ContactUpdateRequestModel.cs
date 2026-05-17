@@ -1,14 +1,24 @@
-﻿namespace BandPortal.WebServices.API.Models.Contact
+﻿using System.Text.Json.Serialization;
+
+namespace BandPortal.WebServices.API.Models.Contact
 {
     public class ContactUpdateRequestModel
     {
-        public string? Name { get; set; }
+        [JsonPropertyName("displayName")]
+        public string? DisplayName { get; set; }
+
+
+        [JsonPropertyName("emailAddress")]
         public string? EmailAddress { get; set; }
+
+
+        [JsonPropertyName("phoneNumber")]
         public string? PhoneNumber { get; set; }
+
 
         public bool HasAnyUpdates()
         {
-            return Name != null || EmailAddress != null || PhoneNumber != null;
+            return DisplayName != null || EmailAddress != null || PhoneNumber != null;
         }
     }
 }

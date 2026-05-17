@@ -6,8 +6,8 @@ namespace BandPortal.WebServices.API.Models.Contact
     public class ContactResponseModel
     {
         [Required]
-        [JsonPropertyName("name")]
-        public required string Name { get; set; }
+        [JsonPropertyName("displayName")]
+        public required string DisplayName { get; set; }
 
         [Required]
         [JsonPropertyName("emailAddress")]

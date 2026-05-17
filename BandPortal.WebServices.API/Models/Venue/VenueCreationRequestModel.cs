@@ -1,9 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BandPortal.WebServices.API.Models.Venue
 {
     public class VenueCreationRequestModel
     {
+        [Required]
         [JsonPropertyName("name")]
         public required string Name { get; set; }
 

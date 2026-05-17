@@ -1,0 +1,43 @@
+﻿using System.Text.Json.Serialization;
+
+namespace BandPortal.WebServices.API.Models.Address
+{
+    public class AddressCreationRequestModel
+    {
+
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
+
+
+        [JsonPropertyName("addressLine1")]
+        public string? AddressLine1 { get; set; }
+
+
+        [JsonPropertyName("addressLine2")]
+        public string? AddressLine2 { get; set; }
+
+
+        [JsonPropertyName("city")]
+        public string? City { get; set; }
+
+
+        [JsonPropertyName("county")]
+        public string? County { get; set; }
+
+
+        [JsonPropertyName("country")]
+        public string? Country { get; set; }
+
+
+        [JsonPropertyName("postcode")]
+        public string? Postcode { get; set; }
+
+
+        [JsonPropertyName("latitude")]
+        public float? Latitude { get; set; }
+
+
+        [JsonPropertyName("longitude")]
+        public float? Longitude { get; set; }
+    }
+}
