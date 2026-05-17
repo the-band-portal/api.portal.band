@@ -4,6 +4,6 @@ namespace BandPortal.WebServices.API.Common.Services
 {
     public interface IUserObjectService
     {
-        Task<UserEntityModel?> GetDocumentAsync(Guid userId);
+        Task<UserEntityModel?> GetUserAsync(Guid userId);
     }
 }

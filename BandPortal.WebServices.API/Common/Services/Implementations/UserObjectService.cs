@@ -18,7 +18,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         }
 
 
-        public async Task<UserEntityModel?> GetDocumentAsync(Guid userId)
+        public async Task<UserEntityModel?> GetUserAsync(Guid userId)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get user {UserId}", userId);
+                _logger.LogError(ex, "Failed to get User {UserId}", userId);
                 return null;
             }
         }
