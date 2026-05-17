@@ -159,7 +159,7 @@ namespace BandPortal.WebServices.API.Common.EntityFramework
                 entity.Property(e => e.DeletedBy)                       .HasColumnName("deleted_by")                                .HasColumnType("char(36)");
                 entity.Property(e => e.BandId)                          .HasColumnName("band_id")                                   .HasColumnType("char(36)")                                                                                                          .IsRequired();
                 
-                entity.Property(e => e.Name)                            .HasColumnName("name")                                      .HasColumnType("text")                                                                                                              .IsRequired();
+                entity.Property(e => e.DisplayName)                     .HasColumnName("display_name")                              .HasColumnType("text")                                                                                                              .IsRequired();
                 entity.Property(e => e.EmailAddress)                    .HasColumnName("email_address")                             .HasColumnType("text");
                 entity.Property(e => e.PhoneNumber)                     .HasColumnName("phone_number")                              .HasColumnType("text");
                 entity.Property(e => e.UserId)                          .HasColumnName("user_id")                                   .HasColumnType("char(36)");
