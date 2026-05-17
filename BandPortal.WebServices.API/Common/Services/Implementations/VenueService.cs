@@ -22,7 +22,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Addresses
+                return await _db.Venues
                     .FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId);
             }
             catch (Exception ex)
@@ -36,7 +36,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Addresses
+                return await _db.Venues
                     .Where(v => v.BandId == bandId)
                     .ToListAsync();
             }
@@ -51,7 +51,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                await _db.Addresses.AddAsync(entity);
+                await _db.Venues.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 return await GetByIdAsync(entity.Id, entity.BandId);
             }
@@ -66,7 +66,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                var address = await _db.Addresses.FirstOrDefaultAsync(v => v.Id == addressId && v.BandId == bandId);
+                var address = await _db.Venues.FirstOrDefaultAsync(v => v.Id == addressId && v.BandId == bandId);
                 if (address == null)
                 {
                     _logger.LogWarning("Address {AddressId} not found for band {BandId}", addressId, bandId);
@@ -77,7 +77,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
 
                 if (updateData.Name != null)                {   address.Name = updateData.Name;                             hasUpdates = true; }
                 if (updateData.AddressLine1 != null)        {   address.AddressLine1 = updateData.AddressLine1;             hasUpdates = true; }
-                if (updateData.AddressLine2 != null)        {   address.AddressLine1 = updateData.AddressLine1;             hasUpdates = true; }
+                if (updateData.AddressLine2 != null)        {   address.AddressLine2 = updateData.AddressLine2;             hasUpdates = true; }
                 if (updateData.City != null)                {   address.City = updateData.City;                             hasUpdates = true; }
                 if (updateData.County != null)              {   address.County = updateData.County;                         hasUpdates = true; }
                 if (updateData.Country != null)             {   address.Country = updateData.Country;                       hasUpdates = true; }
@@ -105,7 +105,7 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                var address = await _db.Addresses.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
+                var address = await _db.Stages.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
                 if (address == null)
                 {
                     return false;

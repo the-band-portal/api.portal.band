@@ -22,12 +22,12 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Venues
+                return await _db.Stages
                     .FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get venue {VenueId} for band {BandId}", id, bandId);
+                _logger.LogError(ex, "Failed to get stage {StageId} for band {BandId}", id, bandId);
                 return null;
             }
         }
@@ -36,13 +36,13 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                return await _db.Venues
+                return await _db.Stages
                     .Where(v => v.BandId == bandId)
                     .ToListAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to get all venues for band {BandId}", bandId);
+                _logger.LogError(ex, "Failed to get all stages for band {BandId}", bandId);
                 return new List<StageEntityModel>();
             }
         }
@@ -51,82 +51,49 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                await _db.Venues.AddAsync(entity);
+                await _db.Stages.AddAsync(entity);
                 await _db.SaveChangesAsync();
                 return await GetByIdAsync(entity.Id, entity.BandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to create venue");
+                _logger.LogError(ex, "Failed to create stage");
                 return null;
             }
         }
 
-        public async Task<StageEntityModel?> UpdateAsync(Guid venueId, Guid bandId, StageUpdateRequestModel updateData)
+        public async Task<StageEntityModel?> UpdateAsync(Guid stageId, Guid bandId, StageUpdateRequestModel updateData)
         {
             try
             {
-                var venue = await _db.Venues.FirstOrDefaultAsync(v => v.Id == venueId && v.BandId == bandId);
-                if (venue == null)
+                var stage = await _db.Stages.FirstOrDefaultAsync(v => v.Id == stageId && v.BandId == bandId);
+                if (stage == null)
                 {
-                    _logger.LogWarning("Venue {VenueId} not found for band {BandId}", venueId, bandId);
+                    _logger.LogWarning("Stage {StageId} not found for band {BandId}", stageId, bandId);
                     return null;
                 }
 
                 bool hasUpdates = false;
 
-                if (updateData.Name != null)
-                {
-                    venue.Name = updateData.Name;
-                    hasUpdates = true;
-                }
-                if (updateData.AddressId.HasValue)
-                {
-                    venue.AddressId = updateData.AddressId;
-                    hasUpdates = true;
-                }
-                if (updateData.CapacityDetails != null)
-                {
-                    venue.CapacityDetails = updateData.CapacityDetails;
-                    hasUpdates = true;
-                }
-                if (updateData.StageDetails != null)
-                {
-                    venue.StageDetails = updateData.StageDetails;
-                    hasUpdates = true;
-                }
-                if (updateData.ParkingInstructions != null)
-                {
-                    venue.ParkingInstructions = updateData.ParkingInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.LoadInInstructions != null)
-                {
-                    venue.LoadInInstructions = updateData.LoadInInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.LoadOutInstructions != null)
-                {
-                    venue.LoadOutInstructions = updateData.LoadOutInstructions;
-                    hasUpdates = true;
-                }
-                if (updateData.PrimaryContactId.HasValue)
-                {
-                    venue.PrimaryContactId = updateData.PrimaryContactId;
-                    hasUpdates = true;
-                }
+                if (updateData.Name != null)                { stage.Name = updateData.Name;                                 hasUpdates = true; }
+                if (updateData.CapacityDetails != null)     { stage.CapacityDetails = updateData.CapacityDetails;           hasUpdates = true; }
+                if (updateData.StageDetails != null)        { stage.StageDetails = updateData.StageDetails;                 hasUpdates = true; }
+                if (updateData.ParkingInstructions != null) { stage.ParkingInstructions = updateData.ParkingInstructions;   hasUpdates = true; }
+                if (updateData.LoadInInstructions != null)  { stage.LoadInInstructions = updateData.LoadInInstructions;     hasUpdates = true; }
+                if (updateData.LoadOutInstructions != null) { stage.LoadOutInstructions = updateData.LoadOutInstructions;   hasUpdates = true; }
+                if (updateData.PrimaryContactId.HasValue)   { stage.PrimaryContactId = updateData.PrimaryContactId;         hasUpdates = true; }
 
                 if (!hasUpdates)
                 {
-                    return venue;
+                    return stage;
                 }
 
                 await _db.SaveChangesAsync();
-                return await GetByIdAsync(venueId, bandId);
+                return await GetByIdAsync(stageId, bandId);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to update venue {VenueId}", venueId);
+                _logger.LogError(ex, "Failed to update stage {StageId}", stageId);
                 return null;
             }
         }
@@ -135,21 +102,43 @@ namespace BandPortal.WebServices.API.Common.Services.Implementations
         {
             try
             {
-                var venue = await _db.Venues.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
-                if (venue == null)
+                var stage = await _db.Stages.FirstOrDefaultAsync(v => v.Id == id && v.BandId == bandId && v.DeletedAt == null);
+                if (stage == null)
                 {
                     return false;
                 }
 
-                venue.DeletedBy = deletedBy;
-                venue.DeletedAt = DateTime.UtcNow;
+                stage.DeletedBy = deletedBy;
+                stage.DeletedAt = DateTime.UtcNow;
                 await _db.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to delete venue {VenueId}", id);
+                _logger.LogError(ex, "Failed to delete stage {StageId}", id);
                 return false;
+            }
+        }
+
+
+
+
+
+
+
+        public async Task<List<StageEntityModel>> GetAllForVenueAsync(Guid bandId, Guid venueId)
+        {
+            try
+            {
+                return await _db.Stages
+                    .Where(v => v.BandId == bandId)
+                    .Where(v => v.VenueId == venueId)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to get all stages for band {BandId}", bandId);
+                return new List<StageEntityModel>();
             }
         }
     }

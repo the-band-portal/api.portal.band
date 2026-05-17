@@ -19,7 +19,6 @@ namespace BandPortal.WebServices.API.Extensions
                 BandId = entity.BandId,
 
                 Name = entity.Name,
-                AddressId = entity.AddressId,
                 CapacityDetails = entity.CapacityDetails,
                 StageDetails = entity.StageDetails,
                 ParkingInstructions = entity.ParkingInstructions,

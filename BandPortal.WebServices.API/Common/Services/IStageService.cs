@@ -6,5 +6,6 @@ namespace BandPortal.WebServices.API.Common.Services
     public interface IStageService : IBaseEntityService<StageEntityModel>
     {
         Task<StageEntityModel?> UpdateAsync(Guid venueId, Guid bandId, StageUpdateRequestModel updateData);
+        Task<List<StageEntityModel>> GetAllForVenueAsync(Guid bandId, Guid venueId);
     }
 }

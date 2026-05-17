@@ -10,10 +10,6 @@ namespace BandPortal.WebServices.API.Models.Stage
         public required string Name { get; init; }
 
         [Required]
-        [JsonPropertyName("addressId")]
-        public required Guid? AddressId { get; init; }
-
-        [Required]
         [JsonPropertyName("capacityDetails")]
         public required string? CapacityDetails { get; init; }
 

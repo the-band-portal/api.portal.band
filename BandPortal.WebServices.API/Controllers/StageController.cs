@@ -17,7 +17,8 @@ namespace BandPortal.WebServices.API.Controllers
     public class StageController : LoggedInControllerBase
     {
         private readonly ILogger<StageController> _logger;
-        private readonly IStageService _venueService;
+        private readonly IVenueService _venueService;
+        private readonly IStageService _stageService;
         private readonly IBandObjectService _bandObjectService;
 
         public StageController(
@@ -29,7 +30,7 @@ namespace BandPortal.WebServices.API.Controllers
             : base(db, logger)
         {
             _logger = logger;
-            _venueService = venueService;
+            _stageService = venueService;
             _bandObjectService = bandObjectService;
         }
 
@@ -54,8 +55,8 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venues = await _venueService.GetAllAsync(bandId);
-                var response = venues.Select(v => v.ToResponseModel()).ToList();
+                var stages = await _stageService.GetAllForVenueAsync(bandId, venueId);
+                var response = stages.Select(s => s.ToResponseModel()).ToList();
 
                 return Ok(response);
             }
@@ -91,7 +92,7 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venue = await _venueService.GetByIdAsync(venueId, bandId);
+                var venue = await _stageService.GetByIdAsync(venueId, bandId);
                 if (venue == null)
                 {
                     return NotFound(new GenericFailResponseModel
@@ -144,11 +145,11 @@ namespace BandPortal.WebServices.API.Controllers
                     CreatedAt = DateTime.UtcNow,
                     LastUpdatedBy = user.Id,
                     Name = newVenueData.Name,
-                    AddressId = newVenueData.AddressId,
+                    VenueId = venueId,
                     PrimaryContactId = newVenueData.PrimaryContactId
                 };
 
-                var createdVenue = await _venueService.CreateAsync(venue);
+                var createdVenue = await _stageService.CreateAsync(venue);
                 if (createdVenue == null)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, new GenericFailResponseModel
@@ -204,7 +205,7 @@ namespace BandPortal.WebServices.API.Controllers
                     });
                 }
 
-                var venue = await _venueService.UpdateAsync(venueId, bandId, updateData);
+                var venue = await _stageService.UpdateAsync(venueId, bandId, updateData);
                 if (venue == null)
                 {
                     return NotFound(new GenericFailResponseModel

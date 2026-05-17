@@ -8,10 +8,6 @@ namespace BandPortal.WebServices.API.Models.Stage
         public string? Name { get; set; }
 
 
-        [JsonPropertyName("addressId")]
-        public Guid? AddressId { get; set; }
-
-
         [JsonPropertyName("capacityDetails")]
         public string? CapacityDetails { get; set; }
 
@@ -38,7 +34,6 @@ namespace BandPortal.WebServices.API.Models.Stage
         public bool HasAnyUpdates()
         {
             return Name != null
-                || AddressId.HasValue
                 || CapacityDetails != null
                 || StageDetails != null
                 || ParkingInstructions != null

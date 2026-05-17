@@ -3,7 +3,7 @@
     public class StageEntityModel : BaseEntityModel
     {
         public required string Name { get; set; }
-        public Guid? AddressId { get; set; }
+        public Guid? VenueId { get; set; }
         public string? CapacityDetails { get; set; }
         public string? StageDetails { get; set; }
         public string? ParkingInstructions { get; set; }
@@ -15,7 +15,7 @@
 
 
 
-        public VenueEntityModel? Address { get; set; }
+        public VenueEntityModel? Venue { get; set; }
         public ContactEntityModel? PrimaryContact { get; set; }
     }
 }
